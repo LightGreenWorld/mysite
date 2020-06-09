@@ -1,0 +1,53 @@
+<!-- 저는 base.html을 상속 받았습니다. {}와 %는 꼭 붙어있어야함 -->
+{% extends 'base.html' %}
+
+<!-- static 폴더에 있는 리소스 로드 -->
+{% load static %}
+
+<!-- 타이틀 -->
+{% block title %} Django Bookmark Detail {% endblock %}
+
+<!-- 바디의 헤더 영역: 네비바 포함 -->
+{% block header %}
+
+<header class="masthead" style="background-image: url('{% static 'img/contact-bg.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Favorite</h1>
+            <span class="subheading">Writer's picks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+<!-- 바디의 콘텐트 영역: 본문 -->
+{% block content %}
+<a href="{% url 'bookmark:update' bookmark.id %}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">수정</a>
+<a href="{% url 'bookmark:delete' bookmark.id %}" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">삭제</a>
+<br>
+
+<div id = "content">
+
+    <h1>{{ object.title }}</h1>
+
+    <ul>
+        <li>URL: <a href = "{{ object.url }}">{{ object.url }}</a></li>
+    </ul>
+
+</div>
+{% endblock %}
+
+<!-- 바디의 푸터 영역 -->
+{% block footer %}
+
+{% endblock %}
+
+<!-- 추가 스크립트 지정 영역 -->
+{% block extra-script %}{% endblock %}
+
+

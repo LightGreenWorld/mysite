@@ -1,0 +1,45 @@
+<!-- 저는 base.html을 상속 받았습니다. {}와 %는 꼭 붙어있어야함 -->
+{% extends "base.html" %}
+
+<!-- static 폴더에 있는 리소스 로드 -->
+{% load static %}
+
+<!-- 타이틀 -->
+{% block title %} 홈쓰 {% endblock %}
+
+<!-- 바디의 헤더 영역: 네비바 포함 -->
+{% block header %}
+<header class="masthead" style="background-image: url('{% static 'img/contact-bg.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>My site</h1>
+            <span class="subheading">It was too hard to complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+<!-- 바디의 콘텐트 영역: 본문 -->
+{% block content %}
+<div class = "text-center">
+    Welcome to 쀼의 세계
+</div>
+
+
+{% endblock %}
+
+<!-- 바디의 푸터 영역 -->
+{% block footer %}
+<footer class="fixed-bottom bg-secondary">
+    <div class="text-white font-italic text-right mr-5">Copyright &copy; Your Website 2020 by HJ </div>
+</footer>
+
+{% endblock %}
+
+<!-- 추가 스크립트 지정 영역 -->
+{% block extra-script %}{% endblock %}

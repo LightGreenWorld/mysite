@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- 타이틀 -->
+{% block title %} Django Blog List {% endblock %}
+
+{% block extra-style %}
+<style>
+.post-body {
+    width: 80%;
+    margin: auto;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 16px;
+}
+</style>
+{% endblock %}
+<!-- 바디의 헤더 영역: 네비바 포함 -->
+{% block header %}
+<header class="masthead" style="background-image: url('{% static 'img/contact-bg.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>BLOG</h1>
+            <span class="subheading">Based on my daily</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+<!-- 바디의 콘텐트 영역: 본문 -->
+{% block content %}
+<div class = "post-body">
+    <a href="{% url 'blog:update' object.id %}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">수정</a>
+    <a href="{% url 'blog:delete' object.id %}" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">삭제</a>
+    <a href="{% url 'blog:index' %}" class="btn btn-third btn-sm" role="button" aria-pressed="true">목록</a>
+    <br>
+    <h2>{{ object.title }}</h2>
+
+    <p>
+        {% if object.get_previous %}
+        <a href="{{ object.get_previous.get_absolute_url }}" title="View previous post">
+            &laquo;-- {{  object.get_previous  }}
+        </a>
+        {% endif %}
+
+        {% if object.get_next %}
+        | <a href="{{ object.get_next.get_absolute_url }}" title="View next post">
+        {{  object.get_next  }} --&raquo;
+        </a>
+        {% endif %}
+    </p>
+</div>
+
+<p> {{ object.modify_dt|date:"j F Y" }}</p>
+<br>
+
+<div>
+    {{ object.content|linebreaks }}
+</div>
+
+   <!--Tag 관련 추가-->
+   <br>
+   <div>
+       <b>TAGS</b> <i class="fas fa-tag"></i>
+       {% load taggit_templatetags2_tags %}
+       {% get_tags_for_object object as "tags" %}
+       {% for tag in tags %}
+           <a href="{% url 'blog:tagged_object_list' tag.name %}">{{tag.name}}</a>
+       {% endfor %}
+&emsp;
+       <a href="{% url 'blog:tag_cloud' %}"><span class="btn btn-info btn-sm">TagCloud</span></a>
+   </div>
+
+<!--#tag 작성 부분 아래 보여지도록 아래 추가-->
+    <br>
+    <div id="disqus_thread"></div>
+
+
+
+
+
+
+<!-- 추가 스크립트 지정 영역 -->
+   <!--댓글 관련 추가-->
+
+    {% block extra-script %}
+
+    <script>
+
+    var disqus_config = function () {
+        this.page.url = '{{disqus_url}}';
+        this.page.identifier = '{{disqus_id}}';
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://django-web-programming-2.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    {%endblock%}
+
+
+{% endblock %}
+
+
+
+<!-- 바디의 푸터 영역 -->
+{% block footer %}
+
+{% endblock %}
+
+
+
